@@ -1,0 +1,31 @@
+<html>
+    <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("#b01").click(function(){
+            htmlobj=$.ajax(
+                {
+                    url:"./test.php",
+                    data:"name=徐晓静",
+                    type:"get",
+                    dataType:"json",
+                    async:true,
+                    success:function(result){
+                        alert("通过ajax查询数据库，返回给页面");
+                        document.write(JSON.stringify(result));
+                    }
+                }
+            );
+        });
+    });
+    </script>
+    </head>
+    <body>
+    
+    <div id="myDiv"><h2>通过 AJAX 改变文本</h2></div>
+    <button id="b01" type="button">改变内容</button>
+    
+    </body>
+    </html>
