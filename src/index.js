@@ -2,12 +2,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 //import PropTypes from 'prop-types';
-
-//import Counter from './Counter';
-import AIS from './AIS'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+
+//import Counter from './Counter';
+//import AIS from './AIS';
+import Tt from './test';
+
   
 
-ReactDOM.render(<AIS  />,document.getElementById('root'));
+ReactDOM.render(<Tt  />,document.getElementById('root'));
 registerServiceWorker();
