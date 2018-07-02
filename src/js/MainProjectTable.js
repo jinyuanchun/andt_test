@@ -29,10 +29,7 @@ function ajax_MainProject (dat,adrB) {
 					//context:'text/json',
 					
 					success:function (res){
-							ReactDOM.render () {
-								<Table dataSource={res} columns={columns}/>,
-								document.getElementById('documentID');
-							}
+							return res;
 					},
 					error:function(){
 							alert('failed');
@@ -110,15 +107,26 @@ const columns = [{
 */
 
 class MainProjectTable extends Component {
-	var ajax_data = 'usr=徐晓静';
-	var ajax_url = 'http://localhost:8080/antd_test/src/php/mysql.php';
+	constructor (props) {
+		super(props);
+		this.state = {
+			dataMainProject : null
+		}
+	}
+	
+	componentDidMount () {
+		var ajax_data = 'usr=徐晓静';
+		var ajax_url = 'http://localhost:8080/antd_test/src/php/mysql.php';
+		this.setState({dataMainProject : ajax_MainProject(ajax_data,ajax_url)});
+	}
+
 	render () {
 		return (
 		<div>
-			<a key='content_id' href="ajax_MainProject(ajax_data,ajax_url)"></a>
+			<Table dataSource={ this.state.dataMainProject } columns={columns}/>
 		</div>
 		);
 	}
 }
-//<a onclick="ajax_MainProject(ajax_data,ajax_url)"><Table dataSource={ projectData } columns={ columns } /></a>
+
 export default MainProjectTable;
