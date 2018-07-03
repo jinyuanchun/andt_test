@@ -4,40 +4,10 @@ import ReactDom from 'react-dom';
 //import { Table, Icon, Divider } from 'antd';
 import { Table } from 'antd';
 
-//import ajax_MainProject from '../ajax/ajax.js';
-import $ from 'jquery';
+import get from '../axios/get';
 
-// step 1 通过后台调取数据
-//var ajax_data = 'usr=徐晓静';
-//var ajax_url = 'http://localhost:8080/antd_test/src/php/mysql.php';
-//var projectData = ajax_MainProject(ajax_data,ajax_url);
-//console.log("hello"+projectData);
-
-function ajax_MainProject (dat,adrB) {
-	//console.log(dat);
-	//var dat = {usr:"徐晓静"};
- $.ajax(
-			{
-					url:adrB,
-					//data:JSON.stringify(dat),
-					data:dat,
-					type:"get",
-					dataType:"jsonp",
-					jsonpCallback:'new_callback',
-					async:true,
-					//scriptCharset:'utf-8',
-					//context:'text/json',
-					
-					success:function (res){
-							return res;
-					},
-					error:function(){
-							alert('failed');
-					}
-					
-			}
-	)
-}
+let info;
+let self;
 
 // 表展示
 const columns = [{
@@ -75,50 +45,35 @@ const columns = [{
 }
 ]
 
-// 定义表
-/*
-const dataSource = [{
-  key: '1',
-  name: '胡彦斌',
-  age: 32,
-  address: '西湖区湖底公园1号'
-}, {
-  key: '2',
-  name: '胡彦祖',
-  age: 42,
-  address: '西湖区湖底公园1号'
-}];
-*/
-
-/*
-const columns = [{
-  title: '姓名',
-  dataIndex: 'name',
-  key: 'name',
-}, {
-  title: '年龄',
-  dataIndex: 'age',
-  key: 'age',
-}, {
-  title: '住址',
-  dataIndex: 'address',
-  key: 'address',
-}];
-*/
-
 class MainProjectTable extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
 			dataMainProject : null
-		}
+		};
+		self=this;
 	}
-	
 	componentDidMount () {
-		var ajax_data = 'usr=徐晓静';
-		var ajax_url = 'http://localhost:8080/antd_test/src/php/mysql.php';
-		this.setState({dataMainProject : ajax_MainProject(ajax_data,ajax_url)});
+		//alert(111);
+		get(
+			'/php/mysql.php?usr=徐晓静',
+			function(res){
+				console.log('res : ',res.data);
+				info = res.data;
+				if(info && info.length && info.length >0) {
+					info.map(
+						function(item,index){
+							item.key = index
+						}
+					)
+					self.setState({dataMainProject : info});
+				}
+				
+				
+			}
+		);
 	}
+
 
 	render () {
 		return (
